@@ -1,0 +1,189 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100vh;
+}
+
+body {
+  background-color: #7159c1;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 32px;
+  letter-spacing: 1px;
+  margin: 20px 0;
+  color: white;
+}
+
+form {
+  margin: 20px 0;
+  background-color: white;
+  padding: 30px 25px;
+  border-radius: 5px;
+}
+
+form .input-block {
+  margin-bottom: 20px;
+}
+
+form .input-block label {
+  font-size: 14px;
+  color: darkslateblue;
+}
+
+form .input-block input {
+  width: 100%;
+  display: block;
+  margin-top: 8px;
+  padding: 7px;
+  font-size: 16px;
+  color: #7159c1;
+  border-radius: 2px;
+  border: 1px solid #ccddef;
+  outline-color: #7159c1;
+}
+
+form .btn-login {
+  display: block;
+  min-width: 120px;
+  border: none;
+  background-color: #7159c1;
+  color: white;
+  border-radius: 25px;
+  margin: auto;
+  padding: 7px;
+}
+/* APARIÇÃO DO FORM SUAVEMENTE*/
+form{
+  /*como será o comportamento*/
+  animation-name: sweet;/*chama a animação*/
+  animation-duration: 500ms;
+  overflow: hidden; /* para que os campos não saiam fora do form na hora de animar*/
+  animation: fade 0.2ms;/*padrão se mexendo*/
+}
+/*Para se criar uma nova animação, se utiliza @keyframes*/
+
+@keyframes sweet{/*passando o ponto 0 ao 100 com from e to*/
+  from{
+    opacity: 0;
+    transform: scale(0.9);/*diminui um pouco o form ou o item onde a keyframe foi usada*/
+  }to{
+    opacity: 1;
+    transform: scale(1)
+  }
+}
+
+/*Fazer os campos aparecerem da esquerda para a 
+direita, suavizando a entrada e fazendo-os entrar em momentos
+distintos*/
+form .input-block:nth-child(1)/*primeiro campo*/{
+  animation-name: move;
+  animation-duration: 500ms;
+  animation-fill-mode: backwards;/*impede que os dados que usam a animação aparecem antes ficando na posição -35%*/
+}
+form .input-block:nth-child(2){
+  animation: move 400ms;/*permite colocar a animação em apenas uma linha*/
+  animation-delay: 100ms;/*corresponde a "demora" para o campo entrar e tela*/
+  animation-fill-mode: backwards;
+}
+form
+ .btn-login{
+   animation:move 400ms;
+   animation-delay: 250ms;
+   animation-fill-mode: backwards;/*estado inicial*/
+ }
+@keyframes move{
+  from{
+    opacity: 0;
+    transform: translateX(-35%)/*pegando o eixo X trazendo ele da posição -35%*/
+  }to{
+    opacity: 1;
+    transform: translateX(0);/* ate a 0%*/
+  }
+}
+/* Quando clicar em login(botão), fazer o formulario sai da tela indo
+para baixo*/
+
+/*classe adicionada no script*/
+.form-hide{
+  animation: formDown 1.2s;
+  animation-fill-mode: forwards;/* para que ele fique na posição final e não volte depois da animação*/
+  
+  /*Adicionar um efeito diferente de timing para a saida do formulario*/
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1)/*os 2 primeiro refere ao eio x e os dois ultimos ao Y*/
+}
+@keyframes formDown{
+  from{
+    transform: translateY(0);/*pega o eixo Y (cima) na posição atual*/
+  }to{
+    transform: translateY(100vh)/* sai da tela*/
+  }
+}
+
+/*Fazer o formulário dizer não-não(vibrar) caso haja campos vazios*/
+form.validate-error{
+  animation: vibrar 350ms linear;/*linear mantem a linha reta*/
+  animation-play-state: fade paused;/*padrão rodando, quando validar ele nao roda mais*/
+  animation-iteration-count: 2;/*quantas vezes ela se repete*/
+}
+/*Inserindo 4 pontos pois ele vibrará nos 4 pontos do eixo X*/
+@keyframes vibrar{
+  0%,
+  100%{
+    transform: translateX(0);
+  }
+  35%{
+    transform: translateX(-13%);
+  }
+  70%{
+    transform: translateX(13%);
+  }
+  
+}
+/*Criar alguns quadrados animados (que fiquem girando) e que saem
+de baixo da tela (fora do campo de visão) e vão para cima(que saia
+do campo de visão também), com tamnhos diferentes, saindo em 
+momentos diferentes, com timing diferente, e sem parar
+
+/*quadrados -SQUARES*/
+body{
+  overflow: hidden;
+}
+.quadrados li{
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.15);
+  display: block;
+  position: absolute;
+  bottom: -40px;
+  animation: up 2s infinite;/* nome do key frame - tempo da transição - ficará infinito*/
+  animation-direction: alternate;
+  background-repeat: no-repeat;
+}
+
+@keyframes up{
+  from{
+    opacity: 0;/*desaparece*/
+    transform: translateY(0);
+  }50%{
+    opacity: 1;/*aparece*/
+  }to{
+    opacity: 0;/*desaparece*/
+    transform: translateY(-800px) rotate(960deg);/* rotate rotação*/
+  }
+}
+
+
